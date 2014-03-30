@@ -22,18 +22,40 @@ var js_comparison_table = function () {
                 -Infinity,
                 NaN,
                 {}];
+  var values2 = [true, false,
+                'true', 'false',
+                1, 0, -1,
+                '1', '0', '-1',
+                null, undefined,
+                [], [[]],
+                [0], [1],
+                ['0'], ['1'],
+                '',
+                Infinity,
+                -Infinity,
+                NaN,
+                {}];
+  // as for objects it makes difference if they are the same
   var rows = [];
   var row = [];
   var i, j;
+  var val1, val2;
 
+  //
+  row = values2.map(Boolean).map(function (x) {
+    return x ? 1 : -0.5;
+  });
+  rows.push([1].concat(row));
   for (i = 0; i < values.length; i++) {
-    row = [];
-    for (j = 0; j < values.length; j++) {
-      if (values[i] === values[j]) {
+    row = [Boolean(values[i]) ? 1 : -0.5];
+    for (j = 0; j < values2.length; j++) {
+      if (values[i] === values2[j]) {
         row.push(1.);
-      } else if (values[i] == values[j]) {
+      } else if (values[i] == values2[j]) {
         row.push(0.5);
-      } else if (values[i] != values[j]) {
+      } else if (values[i] == values[j]) {
+        row.push(0);
+      } else if (values[i] != values2[j]) {
         // row.push(-1);
         row.push(-0.5);  // purely for graphical reasons
       } else {
@@ -43,7 +65,7 @@ var js_comparison_table = function () {
     rows.push(row);
   }
 
-  return {labels: values.map(stringify),
+  return {labels: ["Boolean(x)"].concat(values.map(stringify)),
           rows: rows};
 };
 
