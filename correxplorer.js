@@ -1,7 +1,62 @@
+var stringify = function (x) {
+  if (typeof(x) === 'number' || x === undefined) {
+    return String(x);
+    // otherwise it won't work for:
+    // NaN, Infinity, undefined
+  } else {
+    return JSON.stringify(x);
+  }
+};
+
+var js_comparison_table = function () {
+  var values = [true, false,
+                'true', 'false',
+                1, 0, -1,
+                '1', '0', '-1',
+                null, undefined,
+                [], [[]],
+                [0], [1],
+                ['0'], ['1'],
+                '',
+                Infinity,
+                -Infinity,
+                NaN,
+                {}];
+  var rows = [];
+  var row = [];
+  var i, j;
+
+  for (i = 0; i < values.length; i++) {
+    row = [];
+    for (j = 0; j < values.length; j++) {
+      if (values[i] === values[j]) {
+        row.push(1.);
+      } else if (values[i] == values[j]) {
+        row.push(0.5);
+      } else if (values[i] != values[j]) {
+        // row.push(-1);
+        row.push(-0.5);  // purely for graphical reasons
+      } else {
+        row.push(0.);
+      }
+    }
+    rows.push(row);
+  }
+
+  return {labels: values.map(stringify),
+          rows: rows};
+};
+
 window.onload=function(){
 
   d3.select("button#file_load").on("click", function() {
       load_all();
+  });
+
+  d3.select("button#js_comparison").on("click", function() {
+    d3.select("svg").remove();
+    var js_comp = js_comparison_table();
+    main(js_comp.rows, js_comp.labels, js_comp.labels);
   });
 
   var load_all = function(){
@@ -33,6 +88,7 @@ window.onload=function(){
   load_all();  // not to start with nothing
 
 };
+
 
 var main = function(corr, label_col, label_row){
 

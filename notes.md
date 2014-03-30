@@ -11,6 +11,7 @@
 * Easier search for / filtering variables?
 * Some listing of previously loaded csv files?
 * Some scales, not only -1 to 1 (so it will be usable also for counts)
+* Inspiration: http://dorey.github.io/JavaScript-Equality-Table/
 
 ## TO THINK
 

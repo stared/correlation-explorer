@@ -5,6 +5,8 @@ An interactive way to explore 2d arrays
 
 ![Correlation Explorer - Screenshot](screenshot.png)
 
+![Correlation Explorer - Screenshot](javascript_truth.png)
+
 # Intro
 
 You can:
